@@ -99,19 +99,19 @@ function timeSpanToString(startDate, endDate) {
  */
 function angleBetweenClockHands(date) {
   // throw new Error('Not implemented');
-  const hour = date.getUTCHours();
-  const minute = date.getMinutes();
 
-  let angleDegrees = Math.abs(((60 * (hour % 12)) - minute * 11) * 0.5);
+  const hour = date.getUTCHours() % 12;
+  const minute = date.getUTCMinutes();
+  const hourAngle = (hour * 30) + (minute / 2);
+  const minuteAngle = (minute * 6);
+
+  let angleDegrees = (Math.abs(minuteAngle - hourAngle));
 
   if (angleDegrees > 180) {
     angleDegrees = 360 - angleDegrees;
   }
 
   return (angleDegrees * Math.PI) / 180;
-  // (hour + (minute / 60)) * 30 - minute * 6;
-  // (час+(минуты /60))*30 -минуты*6)
-  // abs((  (     (   (h % 12) + (m / 60)   ) / 12) — (m / 60)   ) * 360)
 }
 
 
