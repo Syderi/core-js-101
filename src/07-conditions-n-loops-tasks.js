@@ -412,8 +412,16 @@ function toNaryString(num, n) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  let resultPath = '';
+  const arrayPathes = pathes.slice().map((item) => item.split('/'));
+
+  arrayPathes[0].forEach((item, index) => {
+    if (arrayPathes.every((el) => el[index] === item)) {
+      resultPath += `${item}/`;
+    }
+  });
+  return resultPath;
 }
 
 
@@ -435,8 +443,20 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  // throw new Error('Not implemented');
+  const resultMatrix = Array.from({ length: m1.length }, () => []);
+
+  for (let line = 0; line < m1.length; line += 1) {
+    for (let column = 0; column < m2[0].length; column += 1) {
+      let sum = 0;
+      for (let i = 0; i < m1[0].length; i += 1) {
+        sum += m1[line][i] * m2[i][column];
+      }
+      resultMatrix[line][column] = sum;
+    }
+  }
+  return resultMatrix;
 }
 
 
@@ -470,8 +490,47 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(matrix) {
+  let result;
+  const row0 = [];
+  const row1 = [];
+  const row2 = [];
+  const column0 = [];
+  const column1 = [];
+  const column2 = [];
+  const diagon1 = [];
+  const diagon2 = [];
+  const solution = [row0, row1, row2, column0, column1, column2, diagon1, diagon2];
+
+  for (let sol = 0; sol < 3; sol += 1) {
+    column0.push(matrix[sol][0]);
+    column1.push(matrix[sol][1]);
+    column2.push(matrix[sol][2]);
+    row0.push(matrix[0][sol]);
+    row1.push(matrix[1][sol]);
+    row2.push(matrix[2][sol]);
+
+    for (let i = 0; i < 3; i += 1) {
+      if (sol === i) {
+        diagon1.push(matrix[sol][i]);
+      }
+      if (i + sol === 2) {
+        diagon2.push(matrix[sol][i]);
+      }
+    }
+  }
+
+  solution.forEach((item) => {
+    const itemArr = Array.from(new Set(item));
+    if (itemArr.length === 1) {
+      result = `${itemArr[0]}`;
+    }
+  });
+  if (result === 'undefined') {
+    result = undefined;
+  }
+
+  return result;
 }
 
 
